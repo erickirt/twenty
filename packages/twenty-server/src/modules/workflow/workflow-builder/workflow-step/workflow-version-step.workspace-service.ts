@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { FieldMetadataType } from 'twenty-shared/types';
-import { isDefined } from 'twenty-shared/utils';
+import { isDefined, isValidUuid } from 'twenty-shared/utils';
 import { Repository } from 'typeorm';
 import { v4 } from 'uuid';
 
@@ -25,6 +25,7 @@ import { BaseWorkflowActionSettings } from 'src/modules/workflow/workflow-execut
 import {
   WorkflowAction,
   WorkflowActionType,
+  WorkflowFormAction,
 } from 'src/modules/workflow/workflow-executor/workflow-actions/types/workflow-action.type';
 import { WorkflowRunWorkspaceService } from 'src/modules/workflow/workflow-runner/workflow-run/workflow-run.workspace-service';
 import { WorkflowRunnerWorkspaceService } from 'src/modules/workflow/workflow-runner/workspace-services/workflow-runner.workspace-service';
@@ -287,16 +288,28 @@ export class WorkflowVersionStepWorkspaceService {
       );
     }
 
+    if (step.type !== WorkflowActionType.FORM) {
+      throw new WorkflowVersionStepException(
+        'Step is not a form',
+        WorkflowVersionStepExceptionCode.INVALID,
+      );
+    }
+
+    const enrichedResponse = await this.enrichFormStepResponse({
+      step,
+      response,
+    });
+
     const newStepOutput: StepOutput = {
       id: stepId,
       output: {
-        result: response,
+        result: enrichedResponse,
       },
     };
 
     const updatedContext = {
       ...workflowRun.context,
-      [stepId]: response,
+      [stepId]: enrichedResponse,
     };
 
     await this.workflowRunWorkspaceService.saveWorkflowRunState({
@@ -546,5 +559,57 @@ export class WorkflowVersionStepWorkspaceService {
           WorkflowVersionStepExceptionCode.UNKNOWN,
         );
     }
+  }
+
+  private async enrichFormStepResponse({
+    step,
+    response,
+  }: {
+    step: WorkflowFormAction;
+    response: object;
+  }) {
+    const responseKeys = Object.keys(response);
+
+    const enrichedResponses = await Promise.all(
+      responseKeys.map(async (key) => {
+        // @ts-expect-error legacy noImplicitAny
+        if (!isDefined(response[key])) {
+          // @ts-expect-error legacy noImplicitAny
+          return { key, value: response[key] };
+        }
+
+        const field = step.settings.input.find((field) => field.name === key);
+
+        if (
+          field?.type === 'RECORD' &&
+          field?.settings?.objectName &&
+          // @ts-expect-error legacy noImplicitAny
+          isDefined(response[key].id) &&
+          // @ts-expect-error legacy noImplicitAny
+          isValidUuid(response[key].id)
+        ) {
+          const repository = await this.twentyORMManager.getRepository(
+            field.settings.objectName,
+          );
+
+          const record = await repository.findOne({
+            // @ts-expect-error legacy noImplicitAny
+            where: { id: response[key].id },
+          });
+
+          return { key, value: record };
+        } else {
+          // @ts-expect-error legacy noImplicitAny
+          return { key, value: response[key] };
+        }
+      }),
+    );
+
+    return enrichedResponses.reduce((acc, { key, value }) => {
+      // @ts-expect-error legacy noImplicitAny
+      acc[key] = value;
+
+      return acc;
+    }, {});
   }
 }
