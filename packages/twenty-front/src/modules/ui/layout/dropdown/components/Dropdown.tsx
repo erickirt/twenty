@@ -1,5 +1,7 @@
 import { DropdownContent } from '@/ui/layout/dropdown/components/DropdownContent';
 import { DropdownOnToggleEffect } from '@/ui/layout/dropdown/components/DropdownOnToggleEffect';
+import { DROPDOWN_RESIZE_MIN_HEIGHT } from '@/ui/layout/dropdown/constants/DropdownResizeMinHeight';
+import { DROPDOWN_RESIZE_MIN_WIDTH } from '@/ui/layout/dropdown/constants/DropdownResizeMinWidth';
 import { DropdownComponentInstanceContext } from '@/ui/layout/dropdown/contexts/DropdownComponeInstanceContext';
 import { DropdownScope } from '@/ui/layout/dropdown/scopes/DropdownScope';
 import { dropdownHotkeyComponentState } from '@/ui/layout/dropdown/states/dropdownHotkeyComponentState';
@@ -25,19 +27,23 @@ import { isDefined } from 'twenty-shared/utils';
 import { useIsMobile } from 'twenty-ui/utilities';
 import { useDropdown } from '../hooks/useDropdown';
 
+type Width = `${string}px` | `${number}%` | 'auto' | number;
 const StyledDropdownFallbackAnchor = styled.div`
   left: 0;
   position: fixed;
   top: 0;
 `;
 
-const StyledClickableComponent = styled.div`
+const StyledClickableComponent = styled.div<{
+  width?: Width;
+}>`
   height: fit-content;
+  width: ${({ width }) => width ?? 'auto'};
 `;
 
 export type DropdownProps = {
-  className?: string;
   clickableComponent?: ReactNode;
+  clickableComponentWidth?: Width;
   dropdownComponents: ReactNode;
   hotkey?: {
     key: Keys;
@@ -46,17 +52,15 @@ export type DropdownProps = {
   dropdownHotkeyScope: HotkeyScope;
   dropdownId: string;
   dropdownPlacement?: Placement;
-  dropdownWidth?: `${string}px` | `${number}%` | 'auto' | number;
+  dropdownWidth?: Width;
   dropdownOffset?: DropdownOffset;
   dropdownStrategy?: 'fixed' | 'absolute';
   onClickOutside?: () => void;
   onClose?: () => void;
   onOpen?: () => void;
-  avoidPortal?: boolean;
 };
 
 export const Dropdown = ({
-  className,
   clickableComponent,
   dropdownComponents,
   dropdownWidth,
@@ -69,7 +73,7 @@ export const Dropdown = ({
   onClickOutside,
   onClose,
   onOpen,
-  avoidPortal,
+  clickableComponentWidth = 'auto',
 }: DropdownProps) => {
   const { isDropdownOpen, toggleDropdown } = useDropdown(dropdownId);
 
@@ -98,29 +102,40 @@ export const Dropdown = ({
   const isMobile = useIsMobile();
   const bottomAutoresizePadding = isMobile ? 64 : 32;
 
+  const boundaryOptions = {
+    boundary: document.querySelector('#root') ?? undefined,
+    padding: {
+      right: 32,
+      left: 32,
+      bottom: bottomAutoresizePadding,
+    },
+  };
+
   const { refs, floatingStyles, placement } = useFloating({
     placement: dropdownPlacement,
     middleware: [
       ...offsetMiddleware,
-      flip(),
+      flip({
+        ...boundaryOptions,
+      }),
       size({
-        padding: {
-          right: 32,
-          bottom: bottomAutoresizePadding,
-        },
-        /**
-         * DO NOT TOUCH THIS apply() MIDDLEWARE PLEASE
-         *  THIS IS MANDATORY FOR KEEPING AUTORESIZING FOR ALL DROPDOWNS
-         *  IT'S THE STANDARD WAY OF WORKING RECOMMENDED BY THE LIBRARY
-         *  See https://floating-ui.com/docs/size#usage
-         */
         apply: ({ availableHeight, availableWidth }) => {
           flushSync(() => {
-            setDropdownMaxHeight(availableHeight);
-            setDropdownMaxWidth(availableWidth);
+            const maxHeightToApply =
+              availableHeight < DROPDOWN_RESIZE_MIN_HEIGHT
+                ? DROPDOWN_RESIZE_MIN_HEIGHT
+                : availableHeight;
+
+            const maxWidthToApply =
+              availableWidth < DROPDOWN_RESIZE_MIN_WIDTH
+                ? DROPDOWN_RESIZE_MIN_WIDTH
+                : availableWidth;
+
+            setDropdownMaxHeight(maxHeightToApply);
+            setDropdownMaxWidth(maxWidthToApply);
           });
         },
-        boundary: document.querySelector('#root') ?? undefined,
+        ...boundaryOptions,
       }),
     ],
     whileElementsMounted: autoUpdate,
@@ -159,6 +174,7 @@ export const Dropdown = ({
               aria-expanded={isDropdownOpen}
               aria-haspopup={true}
               role="button"
+              width={clickableComponentWidth}
             >
               {clickableComponent}
             </StyledClickableComponent>
@@ -167,7 +183,6 @@ export const Dropdown = ({
           )}
           {isDropdownOpen && (
             <DropdownContent
-              className={className}
               floatingStyles={floatingStyles}
               dropdownWidth={dropdownWidth}
               dropdownComponents={dropdownComponents}
@@ -178,7 +193,6 @@ export const Dropdown = ({
               hotkey={hotkey}
               onClickOutside={onClickOutside}
               onHotkeyTriggered={toggleDropdown}
-              avoidPortal={avoidPortal}
             />
           )}
           <DropdownOnToggleEffect

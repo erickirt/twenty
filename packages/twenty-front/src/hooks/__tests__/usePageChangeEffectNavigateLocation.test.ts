@@ -8,9 +8,9 @@ import { useRecoilValue } from 'recoil';
 
 import { OnboardingStatus } from '~/generated/graphql';
 
-import { useIsMatchingLocation } from '~/hooks/useIsMatchingLocation';
 import { usePageChangeEffectNavigateLocation } from '~/hooks/usePageChangeEffectNavigateLocation';
 import { UNTESTED_APP_PATHS } from '~/testing/constants/UntestedAppPaths';
+import { isMatchingLocation } from '~/utils/isMatchingLocation';
 
 jest.mock('@/onboarding/hooks/useOnboardingStatus');
 const setupMockOnboardingStatus = (
@@ -28,13 +28,13 @@ const setupMockIsWorkspaceActivationStatusEqualsTo = (
     .mockReturnValueOnce(isWorkspaceSuspended);
 };
 
-jest.mock('~/hooks/useIsMatchingLocation');
-const mockUseIsMatchingLocation = jest.mocked(useIsMatchingLocation);
+jest.mock('~/utils/isMatchingLocation');
+const mockIsMatchingLocation = jest.mocked(isMatchingLocation);
 
 const setupMockIsMatchingLocation = (pathname: string) => {
-  mockUseIsMatchingLocation.mockReturnValueOnce({
-    isMatchingLocation: (path: string) => path === pathname,
-  });
+  mockIsMatchingLocation.mockImplementation(
+    (_location, path) => path === pathname,
+  );
 };
 
 jest.mock('@/auth/hooks/useIsLogged');
@@ -98,7 +98,7 @@ const testCases: {
   { loc: AppPath.Invite, isLoggedIn: true, isWorkspaceSuspended: false, onboardingStatus: OnboardingStatus.PROFILE_CREATION, res: '/create/profile' },
   { loc: AppPath.Invite, isLoggedIn: true, isWorkspaceSuspended: false, onboardingStatus: OnboardingStatus.SYNC_EMAIL, res: '/sync/emails' },
   { loc: AppPath.Invite, isLoggedIn: true, isWorkspaceSuspended: false, onboardingStatus: OnboardingStatus.INVITE_TEAM, res: '/invite-team' },
-  { loc: AppPath.Invite, isLoggedIn: true, isWorkspaceSuspended: false, onboardingStatus: OnboardingStatus.COMPLETED, res: '/objects/companies' },
+  { loc: AppPath.Invite, isLoggedIn: true, isWorkspaceSuspended: false, onboardingStatus: OnboardingStatus.COMPLETED, res: defaultHomePagePath },
 
   { loc: AppPath.ResetPassword, isLoggedIn: true, isWorkspaceSuspended: false, onboardingStatus: OnboardingStatus.PLAN_REQUIRED, res: '/plan-required' },
   { loc: AppPath.ResetPassword, isLoggedIn: true, isWorkspaceSuspended: true, onboardingStatus: OnboardingStatus.COMPLETED, res: '/settings/billing' },
@@ -107,7 +107,7 @@ const testCases: {
   { loc: AppPath.ResetPassword, isLoggedIn: true, isWorkspaceSuspended: false, onboardingStatus: OnboardingStatus.PROFILE_CREATION, res: '/create/profile' },
   { loc: AppPath.ResetPassword, isLoggedIn: true, isWorkspaceSuspended: false, onboardingStatus: OnboardingStatus.SYNC_EMAIL, res: '/sync/emails' },
   { loc: AppPath.ResetPassword, isLoggedIn: true, isWorkspaceSuspended: false, onboardingStatus: OnboardingStatus.INVITE_TEAM, res: '/invite-team' },
-  { loc: AppPath.ResetPassword, isLoggedIn: true, isWorkspaceSuspended: false, onboardingStatus: OnboardingStatus.COMPLETED, res: '/objects/companies' },
+  { loc: AppPath.ResetPassword, isLoggedIn: true, isWorkspaceSuspended: false, onboardingStatus: OnboardingStatus.COMPLETED, res: undefined },
 
   { loc: AppPath.VerifyEmail, isLoggedIn: true, isWorkspaceSuspended: false, onboardingStatus: OnboardingStatus.PLAN_REQUIRED, res: AppPath.PlanRequired },
   { loc: AppPath.VerifyEmail, isLoggedIn: true, isWorkspaceSuspended: true, onboardingStatus: OnboardingStatus.COMPLETED, res: '/settings/billing' },
@@ -266,21 +266,27 @@ const testCases: {
 ];
 
 describe('usePageChangeEffectNavigateLocation', () => {
-  testCases.forEach((testCase) => {
-    it(`with location ${testCase.loc} and onboardingStatus ${testCase.onboardingStatus} and isWorkspaceSuspended ${testCase.isWorkspaceSuspended} should return ${testCase.res}`, () => {
-      setupMockIsMatchingLocation(testCase.loc);
-      setupMockOnboardingStatus(testCase.onboardingStatus);
-      setupMockIsWorkspaceActivationStatusEqualsTo(
-        testCase.isWorkspaceSuspended,
-      );
-      setupMockIsLogged(testCase.isLoggedIn);
-      setupMockUseParams(testCase.objectNamePluralFromParams);
-      setupMockRecoil(testCase.objectNamePluralFromMetadata);
+  it.each(testCases)(
+    'with location $loc and onboardingStatus $onboardingStatus and isWorkspaceSuspended $isWorkspaceSuspended should return $res`',
+    ({
+      loc,
+      onboardingStatus,
+      isWorkspaceSuspended,
+      isLoggedIn,
+      objectNamePluralFromParams,
+      objectNamePluralFromMetadata,
+      res,
+    }) => {
+      setupMockIsMatchingLocation(loc);
+      setupMockOnboardingStatus(onboardingStatus);
+      setupMockIsWorkspaceActivationStatusEqualsTo(isWorkspaceSuspended);
+      setupMockIsLogged(isLoggedIn);
+      setupMockUseParams(objectNamePluralFromParams);
+      setupMockRecoil(objectNamePluralFromMetadata);
 
-      expect(usePageChangeEffectNavigateLocation()).toEqual(testCase.res);
-    });
-  });
-
+      expect(usePageChangeEffectNavigateLocation()).toEqual(res);
+    },
+  );
   describe('tests should be exhaustive', () => {
     it('all location, onboarding status and suspended/not suspended workspace activation status should be tested', () => {
       expect(testCases.length).toEqual(

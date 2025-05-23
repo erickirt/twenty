@@ -120,8 +120,8 @@ msgstr ""
 
 #. js-lingui-id: juBVjt
 #: src/modules/workflow/common/standard-objects/workflow-event-listener.workspace-entity.ts
-msgid "A workflow event listener"
-msgstr "Слушалац догађаја workflow-а"
+#~ msgid "A workflow event listener"
+#~ msgstr "Слушалац догађаја workflow-а"
 
 #. js-lingui-id: 1+xDbI
 #: src/modules/workflow/common/standard-objects/workflow-run.workspace-entity.ts
@@ -218,13 +218,13 @@ msgstr "Прилог"
 
 #. js-lingui-id: +bL++X
 #: src/modules/timeline/standard-objects/audit-log.workspace-entity.ts
-msgid "An audit log of actions performed in the system"
-msgstr "Евиденциона листа аудита акција извршених у систему"
+#~ msgid "An audit log of actions performed in the system"
+#~ msgstr "Евиденциона листа аудита акција извршених у систему"
 
 #. js-lingui-id: muVHgL
 #: src/modules/timeline/standard-objects/behavioral-event.workspace-entity.ts
-msgid "An event related to user behavior"
-msgstr "Догађај везан за понашање корисника"
+#~ msgid "An event related to user behavior"
+#~ msgstr "Догађај везан за понашање корисника"
 
 #. js-lingui-id: bZq8rL
 #: src/modules/opportunity/standard-objects/opportunity.workspace-entity.ts
@@ -369,19 +369,19 @@ msgstr "Прилози повезани са {label}"
 
 #. js-lingui-id: ilRCh1
 #: src/modules/timeline/standard-objects/audit-log.workspace-entity.ts
-msgid "Audit Log"
-msgstr "Контролни дневник"
+#~ msgid "Audit Log"
+#~ msgstr "Контролни дневник"
 
 #. js-lingui-id: EPEFrH
 #: src/modules/workspace-member/standard-objects/workspace-member.workspace-entity.ts
 #: src/modules/timeline/standard-objects/audit-log.workspace-entity.ts
-msgid "Audit Logs"
-msgstr "Контролни дневници"
+#~ msgid "Audit Logs"
+#~ msgstr "Контролни дневници"
 
 #. js-lingui-id: RqCC/0
 #: src/modules/workspace-member/standard-objects/workspace-member.workspace-entity.ts
-msgid "Audit Logs linked to the workspace member"
-msgstr "Контролни дневници повезани са чланом радионице"
+#~ msgid "Audit Logs linked to the workspace member"
+#~ msgstr "Контролни дневници повезани са чланом радионице"
 
 #. js-lingui-id: cNBqH+
 #: src/modules/connected-account/standard-objects/connected-account.workspace-entity.ts
@@ -431,13 +431,13 @@ msgstr "URL аватара"
 
 #. js-lingui-id: 20B9kW
 #: src/modules/timeline/standard-objects/behavioral-event.workspace-entity.ts
-msgid "Behavioral Event"
-msgstr "Понашањска догађања"
+#~ msgid "Behavioral Event"
+#~ msgstr "Понашањска догађања"
 
 #. js-lingui-id: Jeh/Q/
 #: src/modules/timeline/standard-objects/behavioral-event.workspace-entity.ts
-msgid "Behavioral Events"
-msgstr "Понашањска догађања"
+#~ msgid "Behavioral Events"
+#~ msgstr "Понашањска догађања"
 
 #. js-lingui-id: K1172m
 #: src/modules/workspace-member/standard-objects/workspace-member.workspace-entity.ts
@@ -782,13 +782,11 @@ msgstr "Компанија догађаја"
 #. js-lingui-id: FJ7QI4
 #: src/modules/timeline/standard-objects/behavioral-event.workspace-entity.ts
 #: src/modules/timeline/standard-objects/audit-log.workspace-entity.ts
-msgid "Event context"
-msgstr "Контекст догађаја"
+#~ msgid "Event context"
+#~ msgstr "Контекст догађаја"
 
 #. js-lingui-id: kJDmsI
 #: src/modules/timeline/standard-objects/timeline-activity.workspace-entity.ts
-#: src/modules/timeline/standard-objects/behavioral-event.workspace-entity.ts
-#: src/modules/timeline/standard-objects/audit-log.workspace-entity.ts
 msgid "Event details"
 msgstr "Детаљи догађаја"
 
@@ -808,23 +806,20 @@ msgstr "ИД догађаја"
 
 #. js-lingui-id: 81maJp
 #: src/modules/workflow/common/standard-objects/workflow.workspace-entity.ts
-msgid "Event Listeners"
-msgstr "Слушаоци догађаја"
+#~ msgid "Event Listeners"
+#~ msgstr "Слушаоци догађаја"
 
 #. js-lingui-id: PYs3rP
 #: src/modules/timeline/standard-objects/timeline-activity.workspace-entity.ts
 #: src/modules/timeline/standard-objects/timeline-activity.workspace-entity.ts
-#: src/modules/timeline/standard-objects/behavioral-event.workspace-entity.ts
-#: src/modules/timeline/standard-objects/behavioral-event.workspace-entity.ts
-#: src/modules/timeline/standard-objects/audit-log.workspace-entity.ts
 msgid "Event name"
 msgstr "Назив догађаја"
 
 #. js-lingui-id: evIGwh
 #: src/modules/timeline/standard-objects/behavioral-event.workspace-entity.ts
 #: src/modules/timeline/standard-objects/audit-log.workspace-entity.ts
-msgid "Event name/type"
-msgstr "Назив/тип догађаја"
+#~ msgid "Event name/type"
+#~ msgstr "Назив/тип догађаја"
 
 #. js-lingui-id: vv99Wu
 #: src/modules/timeline/standard-objects/timeline-activity.workspace-entity.ts
@@ -869,7 +864,6 @@ msgstr "Верзија радног процеса догађаја"
 
 #. js-lingui-id: LxOGsB
 #: src/modules/timeline/standard-objects/timeline-activity.workspace-entity.ts
-#: src/modules/timeline/standard-objects/audit-log.workspace-entity.ts
 msgid "Event workspace member"
 msgstr "Члан радионице догађаја"
 
@@ -1167,8 +1161,8 @@ msgstr "Идеалан купачки профил: Указује на то д�
 
 #. js-lingui-id: NrA0WZ
 #: src/modules/timeline/standard-objects/behavioral-event.workspace-entity.ts
-msgid "If the event is related to a particular object"
-msgstr "Ако је догађај повезан са одређеним објектом"
+#~ msgid "If the event is related to a particular object"
+#~ msgstr "Ако је догађај повезан са одређеним објектом"
 
 #. js-lingui-id: grHYXZ
 #: src/modules/calendar/common/standard-objects/calendar-event.workspace-entity.ts
@@ -1217,8 +1211,8 @@ msgstr "Придружите се свом тиму на Twenty"
 #. js-lingui-id: shbh25
 #: src/modules/timeline/standard-objects/behavioral-event.workspace-entity.ts
 #: src/modules/timeline/standard-objects/audit-log.workspace-entity.ts
-msgid "Json object to provide context (user, device, workspace, etc.)"
-msgstr "Json објекат за пружање контекста (корисник, уређај, радни простор итд.)"
+#~ msgid "Json object to provide context (user, device, workspace, etc.)"
+#~ msgstr "Json објекат за пружање контекста (корисник, уређај, радни простор итд.)"
 
 #. js-lingui-id: HgJ9jQ
 #: src/modules/workflow/common/standard-objects/workflow-run.workspace-entity.ts
@@ -1237,8 +1231,6 @@ msgstr "Json објекат за пружање окдашају"
 
 #. js-lingui-id: TVc0/Q
 #: src/modules/timeline/standard-objects/timeline-activity.workspace-entity.ts
-#: src/modules/timeline/standard-objects/behavioral-event.workspace-entity.ts
-#: src/modules/timeline/standard-objects/audit-log.workspace-entity.ts
 msgid "Json value for event details"
 msgstr "Json вредност за детаље догађаја"
 
@@ -1499,7 +1491,6 @@ msgstr "Токен освежавања провајдера порука"
 #: src/modules/workflow/common/standard-objects/workflow.workspace-entity.ts
 #: src/modules/workflow/common/standard-objects/workflow-version.workspace-entity.ts
 #: src/modules/workflow/common/standard-objects/workflow-run.workspace-entity.ts
-#: src/modules/workflow/common/standard-objects/workflow-event-listener.workspace-entity.ts
 #: src/modules/view/standard-objects/view.workspace-entity.ts
 #: src/modules/person/standard-objects/person.workspace-entity.ts
 #: src/modules/opportunity/standard-objects/opportunity.workspace-entity.ts
@@ -1624,14 +1615,14 @@ msgstr "Број запослених у фирми"
 
 #. js-lingui-id: hhe7Ce
 #: src/modules/timeline/standard-objects/behavioral-event.workspace-entity.ts
-msgid "Object id"
-msgstr "Идентификатор објекта"
+#~ msgid "Object id"
+#~ msgstr "Идентификатор објекта"
 
 #. js-lingui-id: dnPgTI
 #: src/modules/timeline/standard-objects/audit-log.workspace-entity.ts
 #: src/modules/timeline/standard-objects/audit-log.workspace-entity.ts
-msgid "Object metadata id"
-msgstr "Идентификатор метаподатака објекта"
+#~ msgid "Object metadata id"
+#~ msgstr "Идентификатор метаподатака објекта"
 
 #. js-lingui-id: T/nPf5
 #: src/modules/view/standard-objects/view.workspace-entity.ts
@@ -1642,8 +1633,8 @@ msgstr "Идентификатор метаподатака објекта"
 #: src/modules/timeline/standard-objects/behavioral-event.workspace-entity.ts
 #: src/modules/timeline/standard-objects/audit-log.workspace-entity.ts
 #: src/modules/timeline/standard-objects/audit-log.workspace-entity.ts
-msgid "Object name"
-msgstr "Назив објекта"
+#~ msgid "Object name"
+#~ msgstr "Назив објекта"
 
 #. js-lingui-id: r/A6pA
 #: src/modules/view/standard-objects/view.workspace-entity.ts
@@ -1856,8 +1847,8 @@ msgstr "Примљено у"
 #. js-lingui-id: 4Tvtbu
 #: src/modules/timeline/standard-objects/audit-log.workspace-entity.ts
 #: src/modules/timeline/standard-objects/audit-log.workspace-entity.ts
-msgid "Record id"
-msgstr "ИД записа"
+#~ msgid "Record id"
+#~ msgstr "ИД записа"
 
 #. js-lingui-id: 9gXJw8
 #: src/modules/calendar/common/standard-objects/calendar-channel-event-association.workspace-entity.ts
@@ -2202,8 +2193,8 @@ msgstr ""
 
 #. js-lingui-id: 7mPrpl
 #: src/modules/workflow/common/standard-objects/workflow-event-listener.workspace-entity.ts
-msgid "The workflow event listener name"
-msgstr "Назив слушаоца догађаја тока рада"
+#~ msgid "The workflow event listener name"
+#~ msgstr "Назив слушаоца догађаја тока рада"
 
 #. js-lingui-id: od0omS
 #: src/modules/workflow/common/standard-objects/workflow.workspace-entity.ts
@@ -2629,7 +2620,6 @@ msgstr "Добродошли у Twenty: Молимо потврдите ваш �
 #: src/modules/workflow/common/standard-objects/workflow.workspace-entity.ts
 #: src/modules/workflow/common/standard-objects/workflow-version.workspace-entity.ts
 #: src/modules/workflow/common/standard-objects/workflow-run.workspace-entity.ts
-#: src/modules/workflow/common/standard-objects/workflow-event-listener.workspace-entity.ts
 #: src/modules/workflow/common/standard-objects/workflow-automated-trigger.workspace-entity.ts
 #: src/modules/timeline/standard-objects/timeline-activity.workspace-entity.ts
 #: src/modules/favorite/standard-objects/favorite.workspace-entity.ts
@@ -2645,8 +2635,8 @@ msgstr ""
 
 #. js-lingui-id: E03XpH
 #: src/modules/workflow/common/standard-objects/workflow.workspace-entity.ts
-msgid "Workflow event listeners linked to the workflow."
-msgstr "Ослушкивачи догађаја у току рада повезани са током рада."
+#~ msgid "Workflow event listeners linked to the workflow."
+#~ msgstr "Ослушкивачи догађаја у току рада повезани са током рада."
 
 #. js-lingui-id: vwSkSW
 #: src/modules/workflow/common/standard-objects/workflow-run.workspace-entity.ts
@@ -2749,18 +2739,18 @@ msgstr ""
 
 #. js-lingui-id: ENOy6I
 #: src/modules/workflow/common/standard-objects/workflow-event-listener.workspace-entity.ts
-msgid "WorkflowEventListener"
-msgstr "ОслушкивачДогађајаТока Рада"
+#~ msgid "WorkflowEventListener"
+#~ msgstr "ОслушкивачДогађајаТока Рада"
 
 #. js-lingui-id: HN90FO
 #: src/modules/workflow/common/standard-objects/workflow-event-listener.workspace-entity.ts
-msgid "WorkflowEventListener workflow"
-msgstr "ОслушкивачДогађајаТока Рада ток рада"
+#~ msgid "WorkflowEventListener workflow"
+#~ msgstr "ОслушкивачДогађајаТока Рада ток рада"
 
 #. js-lingui-id: 3JA9se
 #: src/modules/workflow/common/standard-objects/workflow-event-listener.workspace-entity.ts
-msgid "WorkflowEventListeners"
-msgstr "ОслушкивачиДогађајаТока Рада"
+#~ msgid "WorkflowEventListeners"
+#~ msgstr "ОслушкивачиДогађајаТока Рада"
 
 #. js-lingui-id: woYYQq
 #: src/modules/workflow/common/standard-objects/workflow.workspace-entity.ts
@@ -2785,7 +2775,6 @@ msgstr "Члан простора за рад"
 #. js-lingui-id: qc38qR
 #: src/modules/workspace-member/standard-objects/workspace-member.workspace-entity.ts
 #: src/modules/timeline/standard-objects/timeline-activity.workspace-entity.ts
-#: src/modules/timeline/standard-objects/audit-log.workspace-entity.ts
 #: src/modules/messaging/common/standard-objects/message-participant.workspace-entity.ts
 #: src/modules/favorite/standard-objects/favorite.workspace-entity.ts
 #: src/modules/calendar/common/standard-objects/calendar-event-participant.workspace-entity.ts
